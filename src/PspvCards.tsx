@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "./Card";
+import Card2 from "./Card2";
 
 type PspvCardsProps = {
   loading: boolean;
@@ -33,7 +33,7 @@ const PspvCards: React.FC<PspvCardsProps> = ({
         console.log(item); // This will log each item to the console
 
         return (
-          <Card
+          <Card2
             key={index}
             id={item.id}
             equipment={item.tag_number}

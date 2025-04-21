@@ -181,7 +181,7 @@ const equipmentData: Record<EquipmentType, string[]> = {
     "041T-106-Mixer",
     "041T-122-Mixer",
   ],
-  PSPV: ["Compressor X", "Boiler Y", "Filter Z"],
+  PSPV: ["025HS_004"],
 };
 type LotoEntry = {
   id: number;
@@ -202,6 +202,7 @@ function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [error2, setError2] = useState<string | null>(null);
 
   const [lotoData, setLotoData] = useState<LotoEntry[]>([]);
   const [filteredLotoData, setFilteredLotoData] = useState<LotoEntry[]>([]);
@@ -290,10 +291,10 @@ function DashboardPage() {
 
     if (selectedEquipmentPspv == "") {
       setSuccess(false);
-      setError("no equipment  selected");
+      setError2("no equipment  selected");
     } else {
       setLoading(true);
-      setError("");
+      setError2("");
       setSuccess(false);
       const { error } = await supabase.from("pspv").insert([
         {
@@ -305,7 +306,7 @@ function DashboardPage() {
 
       if (error) {
         console.error("Error inserting data:", error.message);
-        setError(error.message);
+        setError2(error.message);
       } else {
         setSuccess(true);
         setSelectedEquipmentpspv("");
@@ -359,7 +360,7 @@ function DashboardPage() {
                 </p>
               </div>
               <div className="grid grid-rows-1 md:grid-rows-2 lg:grid-rows-2 place-items-center">
-                <p className="text-2xl font-bold text-blue-400">InActive</p>
+                <p className="text-2xl font-bold text-blue-400">Done</p>
                 <p className="text-5xl font-bold text-green-600">
                   {lotoData.filter((item) => !item.isActive).length}
                 </p>
@@ -484,14 +485,14 @@ function DashboardPage() {
             <div className="flex flex-row+++++++++++++++++++++++++++++++++ gap-12">
               <div className="grid grid-rows-1 md:grid-rows-2 lg:grid-rows-2 place-items-center">
                 <p className="text-2xl font-bold text-blue-400">Active</p>
-                <p className="text-5xl font-bold text-green-600">
+                <p className="text-5xl font-bold text-red-600">
                   {" "}
                   {pspvData.filter((item) => item.isActive).length}
                 </p>
               </div>
               <div className="grid grid-rows-1 md:grid-rows-2 lg:grid-rows-2 place-items-center">
-                <p className="text-2xl font-bold text-blue-400">InActive</p>
-                <p className="text-5xl font-bold text-red-600">
+                <p className="text-2xl font-bold text-blue-400">Done</p>
+                <p className="text-5xl font-bold text-green-600">
                   {" "}
                   {pspvData.filter((item) => !item.isActive).length}
                 </p>
@@ -592,7 +593,7 @@ function DashboardPage() {
             {success && (
               <p style={{ color: "green" }}>Entry added successfully!</p>
             )}
-            {error && <p style={{ color: "red" }}>Error: {error}</p>}
+            {error2 && <p style={{ color: "red" }}>Error: {error2}</p>}
           </div>
         </div>
       )}

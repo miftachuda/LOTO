@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LockKeyhole, UnlockKeyhole, CircleX } from "lucide-react";
 import BreathingRedDot from "./Redot";
-import locked from "./assets/locked.svg";
+import disabled from "./assets/disabled.svg";
 import { supabase } from "./SupabaseClient";
 
 interface CardProps {
@@ -40,7 +40,7 @@ const Card: React.FC<CardProps> = ({
 
   const handleConfirm = async () => {
     setShowConfirm(false);
-    await supabase.from("loto").update({ isActive: false }).eq("id", id);
+    await supabase.from("pspv").update({ isActive: false }).eq("id", id);
     onClick();
     console.log("Closed confirmed"); // replace with real logic
     setTimeout(() => {
@@ -57,8 +57,8 @@ const Card: React.FC<CardProps> = ({
       {isActive && (
         <img
           className="absolute top-0 right-0 h-16"
-          src={locked}
-          alt="locked"
+          src={disabled}
+          alt="disabled"
         />
       )}
       <div className="flex items-center space-x-4">
@@ -105,7 +105,7 @@ const Card: React.FC<CardProps> = ({
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white text-black p-4 rounded-md shadow-lg">
             <p className="mb-4">
-              Are you sure you want to close this LOTO Record?
+              Are you sure you want to close this PSPV Record?
             </p>
             <div className="flex justify-end space-x-2">
               <button

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import EquipmentLib from "./Equipment_Library";
 import {
   Settings2,
   LayoutDashboard,
@@ -10,50 +11,49 @@ import {
 } from "lucide-react";
 import AboutPage from "./About";
 import SettingsPage from "./Setting";
-import EquipmentPage from "./Equipment";
 import DashboardPage from "./DashboardPage";
-import Equipment from "./Equipment_Interface";
+// import Equipment from "./Equipment_Interface";
 
 type MenuItem = "dashboard" | "equipment" | "settings" | "about";
 
 function App() {
-  const [equipments, setEquipments] = useState<Equipment[]>([]);
+  // const [equipments, setEquipments] = useState<Equipment[]>([]);
   const [activeMenuItem, setActiveMenuItem] = useState<MenuItem>("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [formData, setFormData] = useState<Omit<Equipment, "id" | "createdAt">>(
-    {
-      tagNumber: "",
-      voltageRating: "",
-      powerRating: "",
-      rpm: "",
-      flowRate: "",
-      pressure: "",
-      description: "",
-    }
-  );
+  // const [formData, setFormData] = useState<Omit<Equipment, "id" | "createdAt">>(
+  //   {
+  //     tagNumber: "",
+  //     voltageRating: "",
+  //     powerRating: "",
+  //     rpm: "",
+  //     flowRate: "",
+  //     pressure: "",
+  //     description: "",
+  //   }
+  // );
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newEquipment: Equipment = {
-      ...formData,
-      id: crypto.randomUUID(),
-      createdAt: new Date(),
-    };
-    setEquipments([newEquipment, ...equipments]);
-    setFormData({
-      tagNumber: "",
-      voltageRating: "",
-      powerRating: "",
-      rpm: "",
-      flowRate: "",
-      pressure: "",
-      description: "",
-    });
-  };
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const newEquipment: Equipment = {
+  //     ...formData,
+  //     id: crypto.randomUUID(),
+  //     createdAt: new Date(),
+  //   };
+  //   setEquipments([newEquipment, ...equipments]);
+  //   setFormData({
+  //     tagNumber: "",
+  //     voltageRating: "",
+  //     powerRating: "",
+  //     rpm: "",
+  //     flowRate: "",
+  //     pressure: "",
+  //     description: "",
+  //   });
+  // };
 
-  const handleDelete = (id: string) => {
-    setEquipments(equipments.filter((eq) => eq.id !== id));
-  };
+  // const handleDelete = (id: string) => {
+  //   setEquipments(equipments.filter((eq) => eq.id !== id));
+  // };
 
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -73,13 +73,10 @@ function App() {
         return <DashboardPage />;
       case "equipment":
         return (
-          <EquipmentPage
-            equipments={equipments}
-            handleDelete={handleDelete}
-            handleSubmit={handleSubmit}
-            formData={formData}
-            setFormData={setFormData}
-          />
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-blue-400 mb-6"></h2>
+            <EquipmentLib />
+          </div>
         );
       case "settings":
         return <SettingsPage />;

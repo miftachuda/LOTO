@@ -47,8 +47,11 @@ const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
         onChange={(e) => {
           setQuery(e.target.value);
           setIsOpen(true);
+          setSelectedEquipment(query);
         }}
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setIsOpen(true);
+        }}
       />
       {isOpen && filteredData.length > 0 && (
         <ul className="absolute z-10 w-full max-h-60 overflow-y-auto bg-gray-800 text-white border border-gray-600 rounded mt-1 shadow-lg">
