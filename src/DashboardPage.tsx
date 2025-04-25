@@ -181,7 +181,24 @@ const equipmentData: Record<EquipmentType, string[]> = {
     "041T-106-Mixer",
     "041T-122-Mixer",
   ],
-  PSPV: ["025HS_004"],
+  PSPV: [
+    "021HS-010",
+    "021HS-012",
+    "021HS-038",
+    "021HS-045",
+    "021HS-271",
+    "021HS-288",
+    "022HS-008",
+    "022HS-016",
+    "022HS-401",
+    "024HS-042",
+    "024HS-159",
+    "024HS-169",
+    "025HS-004",
+    "025HS-009",
+    "025HS-003",
+    "002HS-067",
+  ],
 };
 type LotoEntry = {
   id: number;
