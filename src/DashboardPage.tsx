@@ -403,7 +403,7 @@ function DashboardPage() {
                     setActive("inactive");
                   }}
                 >
-                  Inactive
+                  Done
                 </button>
               </div>
             </div>
@@ -535,7 +535,7 @@ function DashboardPage() {
                     setActivePspv("inactive");
                   }}
                 >
-                  Inactive
+                  Done
                 </button>
               </div>
             </div>
