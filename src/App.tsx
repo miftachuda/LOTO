@@ -15,7 +15,24 @@ import DashboardPage from "./DashboardPage";
 // import Equipment from "./Equipment_Interface";
 
 type MenuItem = "dashboard" | "equipment" | "settings" | "about";
+// const App: React.FC = () => {
+//   return (
+//     <div className="relative min-h-screen">
+//       {/* Flowing gradient background */}
+//       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#346367] via-[#0a242b] to-[#0f054e] bg-[length:200%_200%] animate-gradient-x" />
 
+//       {/* Your content */}
+//       <div className="relative z-10 p-8 text-white">
+//         <h1 className="text-4xl font-bold mb-4">
+//           Flowing Gradient with Tailwind
+//         </h1>
+//         <p>This background uses Tailwind and custom animation.</p>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default App;
 function App() {
   // const [equipments, setEquipments] = useState<Equipment[]>([]);
   const [activeMenuItem, setActiveMenuItem] = useState<MenuItem>("dashboard");
@@ -88,7 +105,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen h-screen bg-navy-900 text-gray-100 flex overflow-hidden">
+    <div className="min-h-screen h-screen text-gray-100 flex overflow-hidden">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#346367] via-[#0a242b] to-[#0f054e] bg-[length:200%_200%] animate-gradient-x" />
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}

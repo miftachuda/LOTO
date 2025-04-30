@@ -10,6 +10,7 @@ interface CardProps {
   description: string;
   date: string;
   isActive: boolean;
+  lotoNumber: number;
   onClick: () => void;
 }
 
@@ -30,6 +31,7 @@ const Card: React.FC<CardProps> = ({
   description,
   date,
   isActive,
+  lotoNumber,
   onClick,
 }) => {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -42,7 +44,7 @@ const Card: React.FC<CardProps> = ({
     setShowConfirm(false);
     await supabase.from("loto").update({ isActive: false }).eq("id", id);
     onClick();
-    console.log("Closed confirmed"); // replace with real logic
+    // console.log("Closed confirmed"); // replace with real logic
     setTimeout(() => {
       window.location.reload();
     }, 800);
@@ -72,10 +74,11 @@ const Card: React.FC<CardProps> = ({
 
             {/* Show button only when active */}
           </div>
+
           {isActive && (
             <button
               onClick={handleCloseClick}
-              className="mt-2 text-xs text-white bg-slate-400 px-2 py-1 rounded hover:bg-red-100"
+              className="mt-2 text-xs text-white bg-slate-400 px-2 py-1 rounded hover:bg-red-300"
             >
               <CircleX className="text-neutral-800 w-8 h-6" />
             </button>
@@ -88,6 +91,14 @@ const Card: React.FC<CardProps> = ({
           </div>
           <div className="mt-1 bg-gray-600 bg-opacity-40 text-gray-200 px-3 py-1 rounded-md h-20 w-full flex items-start justify-start text-sm overflow-hidden">
             {description}
+          </div>
+          <div className="flex flex-row items-stretch mt-2">
+            <div className="font-extralight text-xs flex items-center justify-center text-white rounded-lg p-2 border-2 shadow-lg">
+              LOTO Number :
+            </div>
+            <div className="font-bold flex items-center justify-center w-16 text-white bg-orange-500 rounded-lg p-2 border-2 ml-4 border-orange-700 shadow-lg">
+              {lotoNumber}
+            </div>
           </div>
         </div>
       </div>

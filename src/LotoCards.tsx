@@ -9,6 +9,7 @@ type LotoCardsProps = {
     desc: string;
     created_at: string;
     isActive: boolean;
+    lotoNumber: number;
   }[];
   callback: () => void;
 };
@@ -30,7 +31,7 @@ const LotoCards: React.FC<LotoCardsProps> = ({
       }}
     >
       {lotoData.map((item, index) => {
-        console.log(item); // This will log each item to the console
+        // console.log(item); // This will log each item to the console
 
         return (
           <Card
@@ -40,6 +41,7 @@ const LotoCards: React.FC<LotoCardsProps> = ({
             description={item.desc}
             date={item.created_at}
             isActive={item.isActive}
+            lotoNumber={item.lotoNumber}
             onClick={callback}
           />
         );

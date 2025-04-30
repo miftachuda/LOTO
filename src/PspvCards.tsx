@@ -30,7 +30,7 @@ const PspvCards: React.FC<PspvCardsProps> = ({
       }}
     >
       {lotoData.map((item, index) => {
-        console.log(item); // This will log each item to the console
+        // console.log(item); // This will log each item to the console
 
         return (
           <Card2

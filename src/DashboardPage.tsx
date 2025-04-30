@@ -206,6 +206,7 @@ type LotoEntry = {
   equipment: string;
   desc: string;
   isActive: boolean;
+  lotoNumber: number;
 };
 type PspvEntry = {
   id: number;
@@ -228,6 +229,7 @@ function DashboardPage() {
   const [selectedType, setSelectedType] = useState<EquipmentType | null>(null);
   const [selectedEquipment, setSelectedEquipment] = useState<string>("");
   const [active, setActive] = useState("active");
+  const [lotonumber, setLotonumber] = useState<number | null>(null);
 
   const [pspvData, setPspvData] = useState<PspvEntry[]>([]);
   const [filteredPspvData, setFilteredPspvData] = useState<PspvEntry[]>([]);
@@ -242,7 +244,7 @@ function DashboardPage() {
   const fetchLotoData = async () => {
     const { data, error } = await supabase.from("loto").select("*");
     if (error) {
-      console.error("Error fetching data:", error.message);
+      // console.error("Error fetching data:", error.message);
     } else {
       setLotoData(data as LotoEntry[]);
       const filtered = (data as LotoEntry[]).filter((item) => item.isActive);
@@ -250,12 +252,12 @@ function DashboardPage() {
     }
 
     setLoading(false);
-    console.log(data);
+    //  console.log(data);
   };
   const fetchPspvData = async () => {
     const { data, error } = await supabase.from("pspv").select("*");
     if (error) {
-      console.error("Error fetching data:", error.message);
+      //   console.error("Error fetching data:", error.message);
     } else {
       setPspvData(data as PspvEntry[]);
       const filtered = (data as PspvEntry[]).filter((item) => item.isActive);
@@ -263,7 +265,7 @@ function DashboardPage() {
     }
 
     setLoading(false);
-    console.log(data);
+    // console.log(data);
   };
 
   useEffect(() => {
@@ -277,6 +279,9 @@ function DashboardPage() {
     if (selectedEquipment == "") {
       setSuccess(false);
       setError("no equipment  selected");
+    } else if (!lotonumber) {
+      setSuccess(false);
+      setError("loto number is empty");
     } else {
       setLoading(true);
       setError("");
@@ -285,11 +290,12 @@ function DashboardPage() {
         {
           equipment: selectedEquipment,
           desc: description,
+          lotoNumber: lotonumber,
         },
       ]);
 
       if (error) {
-        console.error("Error inserting data:", error.message);
+        //  console.error("Error inserting data:", error.message);
         setError(error.message);
       } else {
         setSuccess(true);
@@ -322,7 +328,7 @@ function DashboardPage() {
       ]);
 
       if (error) {
-        console.error("Error inserting data:", error.message);
+        //  console.error("Error inserting data:", error.message);
         setError2(error.message);
       } else {
         setSuccess(true);
@@ -460,6 +466,21 @@ function DashboardPage() {
                 </option>
               ))}
             </select> */}
+              <label className="block mb-2 font-semibold">LOTO Number</label>
+              <input
+                type="number"
+                min="1"
+                step="1"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Only set value if it's a positive integer or empty (to allow deletion)
+                  if (/^\d*$/.test(value)) {
+                    setLotonumber(Number(value));
+                  }
+                }}
+                className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter LOTO number"
+              />
 
               <label className="block mb-2 font-semibold">Description</label>
               <textarea
@@ -480,9 +501,18 @@ function DashboardPage() {
                 <button
                   type="submit"
                   onClick={handleSubmitLoto}
-                  disabled={(loading && !selectedEquipment) || !description}
+                  disabled={
+                    (loading && !selectedEquipment) ||
+                    !description ||
+                    !lotonumber
+                  }
                   style={{ padding: "0.5rem 1rem" }}
-                  className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                  className={`px-4 py-2 rounded text-white 
+    ${
+      (loading && !selectedEquipment) || !description || !lotonumber
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-green-500 hover:bg-green-600"
+    }`}
                 >
                   {loading ? "Submitting..." : "Add Record"}
                 </button>
@@ -602,7 +632,12 @@ function DashboardPage() {
                   (loading && !selectedEquipmentPspv) || !descriptionPspv
                 }
                 style={{ padding: "0.5rem 1rem" }}
-                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                className={`px-4 py-2 rounded text-white 
+                  ${
+                    (loading && !selectedEquipmentPspv) || !descriptionPspv
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-green-500 hover:bg-green-600"
+                  }`}
               >
                 {loading ? "Submitting..." : "Add Record"}
               </button>
